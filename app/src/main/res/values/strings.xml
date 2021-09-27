@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">CurrencyRates</string>
+    <string name="currency_symbol_rub">RUB</string>
+    <string name="currency_symbol_usd">USD</string>
+    <string name="currency_symbol_eur">EUR</string>
+    <string name="currency_symbol_gbp">GBP</string>
+    <string name="currency_symbol_chf">CHF</string>
+    <string name="currency_symbol_cny">CNY</string>
+    <string name="currency_name_rub">Russian Ruble</string>
+    <string name="currency_name_usd">USD</string>
+    <string name="currency_name_eur">EUR</string>
+    <string name="currency_name_gbp">GBP</string>
+    <string name="currency_name_chf">CHF</string>
+    <string name="currency_name_cny">CNY</string>
 </resources>

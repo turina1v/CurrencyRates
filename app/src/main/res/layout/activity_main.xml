@@ -4,15 +4,184 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity"
+    tools:ignore="RtlSymmetry">
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleGroupFrom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <Button
+            android:id="@+id/buttonFromRub"
+            style="@style/Theme.CurrencyToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_symbol_rub" />
+
+        <Button
+            android:id="@+id/buttonFromUsd"
+            style="@style/Theme.CurrencyToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_symbol_usd" />
+
+        <Button
+            android:id="@+id/buttonFromEur"
+            style="@style/Theme.CurrencyToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_symbol_eur" />
+
+        <Button
+            android:id="@+id/buttonFromGbp"
+            style="@style/Theme.CurrencyToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_symbol_gbp" />
+
+        <Button
+            android:id="@+id/buttonFromChf"
+            style="@style/Theme.CurrencyToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_symbol_chf" />
+
+        <Button
+            android:id="@+id/buttonFromCny"
+            style="@style/Theme.CurrencyToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_symbol_cny" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <TextView
+        android:id="@+id/fullTextFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="3dp"
+        app:layout_constraintEnd_toEndOf="@id/numberInput"
+        app:layout_constraintTop_toBottomOf="@id/toggleGroupFrom"
+        tools:text="Российский рубль" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/numberInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fullTextFrom">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:inputType="number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/iconArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_downward"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/numberInput" />
+
+    <TextView
+        android:id="@+id/fullTextTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="3dp"
+        app:layout_constraintEnd_toEndOf="@id/numberInput"
+        app:layout_constraintTop_toBottomOf="@id/iconArrow"
+        tools:text="Американский доллар" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/convertingResult"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fullTextTo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:gravity="end"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleGroupTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/convertingResult"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <Button
+            android:id="@+id/buttonToRub"
+            style="@style/Theme.CurrencyToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_symbol_rub" />
+
+        <Button
+            android:id="@+id/buttonToUsd"
+            style="@style/Theme.CurrencyToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_symbol_usd" />
+
+        <Button
+            android:id="@+id/buttonToEur"
+            style="@style/Theme.CurrencyToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_symbol_eur" />
+
+        <Button
+            android:id="@+id/buttonToGbp"
+            style="@style/Theme.CurrencyToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_symbol_gbp" />
+
+        <Button
+            android:id="@+id/buttonToChf"
+            style="@style/Theme.CurrencyToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_symbol_chf" />
+
+        <Button
+            android:id="@+id/buttonToCny"
+            style="@style/Theme.CurrencyToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_symbol_cny" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+    <TextView
+        android:id="@+id/mainText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
