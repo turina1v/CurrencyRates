@@ -1,4 +1,4 @@
-package com.turina1v.currencyrates.domain
+package com.turina1v.currencyrates.domain.repository
 
 import com.turina1v.currencyrates.data.model.LatestRatesResponse
 import io.reactivex.Single

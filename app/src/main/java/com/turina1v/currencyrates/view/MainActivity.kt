@@ -14,8 +14,35 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        viewModel.preferredCurrencies.observe(this) {
+            setInitialCurrencies(it)
+        }
+
         viewModel.latestRates.observe(this) {
             mainText.text = it
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        setPreferredCurrencies()
+    }
+
+    private fun setInitialCurrencies(currencyPair: Pair<String, String>) {
+        toggleGroupFrom.checkButtonByText(currencyPair.first) {
+            buttonFromRub.isChecked = true
+        }
+        toggleGroupTo.checkButtonByText(currencyPair.second) {
+            buttonToUsd.isChecked = true
+        }
+    }
+
+    private fun setPreferredCurrencies() {
+        viewModel.savePreferredCurrencies(
+            Pair(
+                toggleGroupFrom.getFocusedButtonTextOrEmpty(),
+                toggleGroupTo.getFocusedButtonTextOrEmpty()
+            )
+        )
     }
 }

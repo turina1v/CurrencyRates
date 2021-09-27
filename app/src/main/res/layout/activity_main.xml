@@ -17,42 +17,42 @@
         app:selectionRequired="true"
         app:singleSelection="true">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonFromRub"
             style="@style/Theme.CurrencyToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/currency_symbol_rub" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonFromUsd"
             style="@style/Theme.CurrencyToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/currency_symbol_usd" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonFromEur"
             style="@style/Theme.CurrencyToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/currency_symbol_eur" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonFromGbp"
             style="@style/Theme.CurrencyToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/currency_symbol_gbp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonFromChf"
             style="@style/Theme.CurrencyToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/currency_symbol_chf" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonFromCny"
             style="@style/Theme.CurrencyToggleButton"
             android:layout_width="wrap_content"
@@ -131,42 +131,42 @@
         app:selectionRequired="true"
         app:singleSelection="true">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonToRub"
             style="@style/Theme.CurrencyToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/currency_symbol_rub" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonToUsd"
             style="@style/Theme.CurrencyToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/currency_symbol_usd" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonToEur"
             style="@style/Theme.CurrencyToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/currency_symbol_eur" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonToGbp"
             style="@style/Theme.CurrencyToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/currency_symbol_gbp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonToChf"
             style="@style/Theme.CurrencyToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/currency_symbol_chf" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonToCny"
             style="@style/Theme.CurrencyToggleButton"
             android:layout_width="wrap_content"
