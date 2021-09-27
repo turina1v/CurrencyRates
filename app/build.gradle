@@ -53,4 +53,6 @@ dependencies {
 
     implementation 'io.insert-koin:koin-android:2.2.3'
     implementation 'io.insert-koin:koin-android-viewmodel:2.2.3'
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }
