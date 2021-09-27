@@ -12,5 +12,5 @@
     <string name="currency_name_eur">Евро</string>
     <string name="currency_name_gbp">Британский фунт</string>
     <string name="currency_name_chf">Швейцарский франк</string>
-    <string name="currency_name_cny">Японская иена</string>
+    <string name="currency_name_cny">Китайский юань</string>
 </resources>

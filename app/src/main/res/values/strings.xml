@@ -7,9 +7,9 @@
     <string name="currency_symbol_chf">CHF</string>
     <string name="currency_symbol_cny">CNY</string>
     <string name="currency_name_rub">Russian Ruble</string>
-    <string name="currency_name_usd">USD</string>
-    <string name="currency_name_eur">EUR</string>
-    <string name="currency_name_gbp">GBP</string>
-    <string name="currency_name_chf">CHF</string>
-    <string name="currency_name_cny">CNY</string>
+    <string name="currency_name_usd">United States Dollar</string>
+    <string name="currency_name_eur">Euro</string>
+    <string name="currency_name_gbp">British Pound Sterling</string>
+    <string name="currency_name_chf">Swiss Franc</string>
+    <string name="currency_name_cny">Chinese Yuan</string>
 </resources>
