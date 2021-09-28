@@ -1,7 +1,7 @@
 package com.turina1v.currencyrates.data.api
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import com.turina1v.currencyrates.data.model.LatestRatesResponse
+import com.turina1v.currencyrates.data.model.RateResponse
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,8 +18,8 @@ class NetworkClient {
         apiService = retrofit.create(ApiService::class.java)
     }
 
-    fun getLatestRates(base: String, currencies: String): Single<LatestRatesResponse> =
-        apiService.getLatestRates(base, currencies, API_KEY)
+    fun getRate(base: String, currencies: String): Single<RateResponse> =
+        apiService.getRate(base, currencies, API_KEY)
 
     companion object {
         const val BASE_URL = "https://api.exchangeratesapi.io"

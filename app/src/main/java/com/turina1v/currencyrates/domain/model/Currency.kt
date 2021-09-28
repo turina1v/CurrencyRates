@@ -6,5 +6,19 @@ enum class Currency {
     EUR,
     GBP,
     CHF,
-    CNY
+    CNY;
+
+    fun getOtherSymbols(): String {
+        return values().filter {
+            it != this
+        }.joinToString(separator = ",")
+    }
+
+    companion object {
+        fun getItemByNameOrNull(name: String): Currency? {
+            return values().firstOrNull {
+                it.name == name
+            }
+        }
+    }
 }

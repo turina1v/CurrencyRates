@@ -1,6 +1,6 @@
 package com.turina1v.currencyrates.data.model
 
-data class LatestRatesResponse(
+data class RateResponse(
 	val date: String? = null,
 	val success: Boolean? = null,
 	val rates: Map<String, Double>? = null,
