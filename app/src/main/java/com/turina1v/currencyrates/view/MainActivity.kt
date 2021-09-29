@@ -2,8 +2,11 @@ package com.turina1v.currencyrates.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.turina1v.currencyrates.R
+import com.turina1v.currencyrates.domain.model.Currency
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_exchange.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -14,12 +17,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel.preferredCurrencies.observe(this) {
-            setInitialCurrencies(it)
+        viewModel.latestUpdate.observe(this) {
+            if (layoutLoader.isVisible) {
+                layoutLoader.isVisible = false
+                layoutExchange.isVisible = true
+            }
+            latestUpdateText.text = it.toString()
         }
 
-        viewModel.latestRates.observe(this) {
-            mainText.text = it
+        viewModel.preferredCurrencies.observe(this) {
+            setInitialCurrencies(it)
         }
     }
 
@@ -28,11 +35,11 @@ class MainActivity : AppCompatActivity() {
         setPreferredCurrencies()
     }
 
-    private fun setInitialCurrencies(currencyPair: Pair<String, String>) {
-        toggleGroupFrom.checkButtonByText(currencyPair.first) {
+    private fun setInitialCurrencies(currencyPair: Pair<Currency, Currency>) {
+        toggleGroupFrom.checkButtonByText(currencyPair.first.name) {
             buttonFromRub.isChecked = true
         }
-        toggleGroupTo.checkButtonByText(currencyPair.second) {
+        toggleGroupTo.checkButtonByText(currencyPair.second.name) {
             buttonToUsd.isChecked = true
         }
     }

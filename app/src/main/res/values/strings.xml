@@ -12,4 +12,5 @@
     <string name="currency_name_gbp">British Pound Sterling</string>
     <string name="currency_name_chf">Swiss Franc</string>
     <string name="currency_name_cny">Chinese Yuan</string>
+    <string name="loader_message">Loading latest exchange rates…</string>
 </resources>
