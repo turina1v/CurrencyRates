@@ -75,7 +75,9 @@ class RatesViewModel(
     fun countExchangeValue(count: Int) {
         currentCount = count
         if (cachedCurrencyFrom == null || cachedCurrencyTo == null || cachedRates == null) return
-        val exchangeRate = cachedRates!!.getRateOrNull(cachedCurrencyFrom!!, cachedCurrencyTo!!)
+        val exchangeRate =
+            if (cachedCurrencyFrom == cachedCurrencyTo) 1.0
+            else cachedRates!!.getRateOrNull(cachedCurrencyFrom!!, cachedCurrencyTo!!)
         exchangeRate?.let {
             _exchangeValue.postValue(count * it)
         }
