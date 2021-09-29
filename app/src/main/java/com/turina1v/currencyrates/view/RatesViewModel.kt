@@ -31,14 +31,17 @@ class RatesViewModel(
         get() = _exchangeValue
 
     private var cachedRates: CombinedRates? = null
-    private var currentPair: Pair<Currency, Currency>? = null
+    private var cachedCurrencyFrom: Currency? = null
+    private var cachedCurrencyTo: Currency? = null
+    private var currentCount: Int = 0
 
     private val disposables = CompositeDisposable()
 
     init {
         val initialCurrencies = initialCurrenciesUseCase.invoke()
         _preferredCurrencies.postValue(initialCurrencies)
-        currentPair = initialCurrencies
+        cachedCurrencyFrom = initialCurrencies.first
+        cachedCurrencyTo = initialCurrencies.second
 
         disposables.add(
             allRatesUseCase.invoke()
@@ -59,9 +62,20 @@ class RatesViewModel(
         savePreferredCurrenciesUseCase.invoke(currencyPair)
     }
 
+    fun setCurrencyFrom(newCurrency: Currency) {
+        cachedCurrencyFrom = newCurrency
+        countExchangeValue(currentCount)
+    }
+
+    fun setCurrencyTo(newCurrency: Currency) {
+        cachedCurrencyTo = newCurrency
+        countExchangeValue(currentCount)
+    }
+
     fun countExchangeValue(count: Int) {
-        if (currentPair == null || cachedRates == null) return
-        val exchangeRate = cachedRates!!.getRateOrNull(currentPair!!.first, currentPair!!.second)
+        currentCount = count
+        if (cachedCurrencyFrom == null || cachedCurrencyTo == null || cachedRates == null) return
+        val exchangeRate = cachedRates!!.getRateOrNull(cachedCurrencyFrom!!, cachedCurrencyTo!!)
         exchangeRate?.let {
             _exchangeValue.postValue(count * it)
         }

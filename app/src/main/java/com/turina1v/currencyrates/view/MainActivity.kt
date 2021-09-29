@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.google.android.material.button.MaterialButton
 import com.turina1v.currencyrates.R
 import com.turina1v.currencyrates.domain.model.Currency
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         observeViewModel()
         listenToTextChanges()
+        setUpButtons()
     }
 
     override fun onStop() {
@@ -56,9 +58,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun listenToTextChanges() {
         numberInputEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
                 val count =
@@ -69,6 +71,26 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun setUpButtons() {
+        toggleGroupFrom.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (isChecked) listenToButtonCheckedChanges(group.id, checkedId)
+        }
+        toggleGroupTo.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (isChecked) listenToButtonCheckedChanges(group.id, checkedId)
+        }
+    }
+
+    private fun listenToButtonCheckedChanges(groupId: Int, checkedId: Int) {
+        val button = findViewById<MaterialButton>(checkedId)
+        val currency = Currency.getItemByNameOrNull(button.text.toString())
+        currency?.let {
+            when (groupId) {
+                R.id.toggleGroupFrom -> viewModel.setCurrencyFrom(it)
+                R.id.toggleGroupTo -> viewModel.setCurrencyTo(it)
+            }
+        }
     }
 
     private fun setPreferredCurrencies() {
