@@ -63,12 +63,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingEnd="3dp"
-        app:layout_constraintEnd_toEndOf="@id/numberInput"
+        app:layout_constraintEnd_toEndOf="@id/numberInputLayout"
         app:layout_constraintTop_toBottomOf="@id/toggleGroupFrom"
         tools:text="Российский рубль" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/numberInput"
+        android:id="@+id/numberInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -77,6 +77,7 @@
         app:layout_constraintTop_toBottomOf="@id/fullTextFrom">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/numberInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
@@ -91,19 +92,19 @@
         android:src="@drawable/ic_arrow_downward"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/numberInput" />
+        app:layout_constraintTop_toBottomOf="@id/numberInputLayout" />
 
     <TextView
         android:id="@+id/fullTextTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingEnd="3dp"
-        app:layout_constraintEnd_toEndOf="@id/numberInput"
+        app:layout_constraintEnd_toEndOf="@id/numberInputLayout"
         app:layout_constraintTop_toBottomOf="@id/iconArrow"
         tools:text="Американский доллар" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/convertingResult"
+        android:id="@+id/exchangeResultLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -112,8 +113,10 @@
         app:layout_constraintTop_toBottomOf="@id/fullTextTo">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/exchangeValueText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="0.0"
             android:enabled="false"
             android:gravity="end"
             android:inputType="none" />
@@ -125,7 +128,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@id/convertingResult"
+        app:layout_constraintTop_toBottomOf="@id/exchangeResultLayout"
         app:selectionRequired="true"
         app:singleSelection="true">
 

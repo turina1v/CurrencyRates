@@ -22,5 +22,5 @@ val appModule = module {
     single { GetInitialCurrenciesUseCase(get()) }
     single { GetAllRatesUseCase(get()) }
     single { SavePreferredCurrenciesUseCase(get()) }
-    viewModel { RatesViewModel(get(), get(), get(), get()) }
+    viewModel { RatesViewModel(get(), get(), get()) }
 }

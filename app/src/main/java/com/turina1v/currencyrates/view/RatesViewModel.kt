@@ -26,13 +26,19 @@ class RatesViewModel(
     val latestUpdate: LiveData<Long>
         get() = _latestUpdate
 
+    private val _exchangeValue: MutableLiveData<Double> = MutableLiveData()
+    val exchangeValue: LiveData<Double>
+        get() = _exchangeValue
+
     private var cachedRates: CombinedRates? = null
+    private var currentPair: Pair<Currency, Currency>? = null
 
     private val disposables = CompositeDisposable()
 
     init {
         val initialCurrencies = initialCurrenciesUseCase.invoke()
         _preferredCurrencies.postValue(initialCurrencies)
+        currentPair = initialCurrencies
 
         disposables.add(
             allRatesUseCase.invoke()
@@ -51,6 +57,14 @@ class RatesViewModel(
 
     fun savePreferredCurrencies(currencyPair: Pair<String, String>) {
         savePreferredCurrenciesUseCase.invoke(currencyPair)
+    }
+
+    fun countExchangeValue(count: Int) {
+        if (currentPair == null || cachedRates == null) return
+        val exchangeRate = cachedRates!!.getRateOrNull(currentPair!!.first, currentPair!!.second)
+        exchangeRate?.let {
+            _exchangeValue.postValue(count * it)
+        }
     }
 
     override fun onCleared() {
