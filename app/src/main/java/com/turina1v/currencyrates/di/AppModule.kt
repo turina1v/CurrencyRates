@@ -7,7 +7,6 @@ import com.turina1v.currencyrates.domain.repository.RatesRepository
 import com.turina1v.currencyrates.domain.usecase.GetAllRatesUseCase
 import com.turina1v.currencyrates.domain.usecase.GetInitialCurrenciesUseCase
 import com.turina1v.currencyrates.domain.usecase.SavePreferredCurrenciesUseCase
-import com.turina1v.currencyrates.domain.usecase.SaveRatesUseCase
 import com.turina1v.currencyrates.view.RatesViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -22,9 +21,8 @@ val appModule = module {
     single { GetInitialCurrenciesUseCase(get()) }
     single { GetAllRatesUseCase(get()) }
     single { SavePreferredCurrenciesUseCase(get()) }
-    single { SaveRatesUseCase(get()) }
 
-    viewModel { RatesViewModel(get(), get(), get(), get()) }
+    viewModel { RatesViewModel(get(), get(), get()) }
 
     single { RatesDatabase.create(androidApplication()) }
     single { get<RatesDatabase>().getRatesDao() }
