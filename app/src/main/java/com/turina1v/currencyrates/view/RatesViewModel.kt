@@ -8,6 +8,7 @@ import com.turina1v.currencyrates.domain.model.Currency
 import com.turina1v.currencyrates.domain.usecase.GetAllRatesUseCase
 import com.turina1v.currencyrates.domain.usecase.GetInitialCurrenciesUseCase
 import com.turina1v.currencyrates.domain.usecase.SavePreferredCurrenciesUseCase
+import com.turina1v.currencyrates.domain.usecase.SaveRatesUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -16,7 +17,8 @@ import timber.log.Timber
 class RatesViewModel(
     private val allRatesUseCase: GetAllRatesUseCase,
     initialCurrenciesUseCase: GetInitialCurrenciesUseCase,
-    private val savePreferredCurrenciesUseCase: SavePreferredCurrenciesUseCase
+    private val savePreferredCurrenciesUseCase: SavePreferredCurrenciesUseCase,
+    private val saveRatesUseCase: SaveRatesUseCase
 ) : ViewModel() {
     private val _preferredCurrencies: MutableLiveData<Pair<Currency, Currency>> = MutableLiveData()
     val preferredCurrencies: LiveData<Pair<Currency, Currency>>
@@ -60,6 +62,12 @@ class RatesViewModel(
 
     fun savePreferredCurrencies(currencyPair: Pair<String, String>) {
         savePreferredCurrenciesUseCase.invoke(currencyPair)
+    }
+
+    fun saveRates() {
+        cachedRates?.let {
+            saveRatesUseCase.invoke(it).blockingGet()
+        }
     }
 
     fun setCurrencyFrom(newCurrency: Currency) {
