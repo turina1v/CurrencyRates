@@ -7,7 +7,6 @@ import com.turina1v.currencyrates.data.repository.PreferencesRepositoryImpl
 import com.turina1v.currencyrates.data.repository.RatesRepositoryImpl
 import com.turina1v.currencyrates.domain.repository.DatabaseRatesRepository
 import com.turina1v.currencyrates.domain.repository.PreferencesRepository
-import com.turina1v.currencyrates.domain.usecase.GetRateUseCase
 import com.turina1v.currencyrates.domain.repository.RatesRepository
 import com.turina1v.currencyrates.domain.usecase.GetAllRatesUseCase
 import com.turina1v.currencyrates.domain.usecase.GetInitialCurrenciesUseCase
@@ -25,7 +24,6 @@ val appModule = module {
     single<DatabaseRatesRepository> { DatabaseRatesRepositoryImpl(get()) }
     single<PreferencesRepository> { PreferencesRepositoryImpl(androidContext()) }
 
-    single { GetRateUseCase(get()) }
     single { GetInitialCurrenciesUseCase(get()) }
     single { GetAllRatesUseCase(get()) }
     single { SavePreferredCurrenciesUseCase(get()) }
