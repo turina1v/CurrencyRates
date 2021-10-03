@@ -1,9 +1,13 @@
 package com.turina1v.currencyrates.domain.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.turina1v.currencyrates.data.model.RateResponse
 
 
+@Entity(tableName = "table_rates")
 data class CombinedRates(
+    @PrimaryKey
     val timestamp: Long,
     val rates: Set<CurrencyRate>
 ) {
