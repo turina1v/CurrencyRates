@@ -28,8 +28,8 @@ class RatesViewModel(
     val latestUpdate: LiveData<String>
         get() = _latestUpdate
 
-    private val _exchangeValue: MutableLiveData<Double> = MutableLiveData()
-    val exchangeValue: LiveData<Double>
+    private val _exchangeValue: MutableLiveData<String> = MutableLiveData()
+    val exchangeValue: LiveData<String>
         get() = _exchangeValue
 
     private var cachedRates: CombinedRates? = null
@@ -81,7 +81,7 @@ class RatesViewModel(
             if (cachedCurrencyFrom == cachedCurrencyTo) 1.0
             else cachedRates!!.getRateOrNull(cachedCurrencyFrom!!, cachedCurrencyTo!!)
         exchangeRate?.let {
-            _exchangeValue.postValue(count * it)
+            _exchangeValue.postValue(String.format("%.4f", count * it))
         }
     }
 

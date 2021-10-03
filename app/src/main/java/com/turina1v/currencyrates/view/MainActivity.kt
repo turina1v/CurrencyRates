@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.exchangeValue.observe(this) {
-            exchangeValueText.setText(it.toString())
+            exchangeValueText.setText(it)
         }
     }
 
