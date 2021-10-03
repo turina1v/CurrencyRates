@@ -55,14 +55,15 @@ class RatesRepositoryImpl(
         return Observable.fromIterable(Currency.values().toList()).flatMap {
             getRate(it.name, it.getOtherSymbols()).toObservable()
         }.toList().map {
-            cachedRates = CombinedRates(
+            val newRates = CombinedRates(
                 timestamp = System.currentTimeMillis(),
                 rates = it.mapNotNull { response ->
                     CurrencyRate.fromResponse(response)
                 }.toSet()
             )
-            cachedRates
-        }
+            cachedRates = newRates
+            newRates
+        }.doOnSuccess { saveRates(it).subscribe() }
     }
 
     private fun getRatesFromDb(): Single<CombinedRates> {

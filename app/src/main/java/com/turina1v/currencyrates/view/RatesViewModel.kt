@@ -64,12 +64,6 @@ class RatesViewModel(
         savePreferredCurrenciesUseCase.invoke(currencyPair)
     }
 
-    fun saveRates() {
-        cachedRates?.let {
-            saveRatesUseCase.invoke(it).blockingGet()
-        }
-    }
-
     fun setCurrencyFrom(newCurrency: Currency) {
         cachedCurrencyFrom = newCurrency
         countExchangeValue(currentCount)
