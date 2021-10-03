@@ -13,6 +13,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RatesViewModel(
     private val allRatesUseCase: GetAllRatesUseCase,
@@ -24,8 +26,8 @@ class RatesViewModel(
     val preferredCurrencies: LiveData<Pair<Currency, Currency>>
         get() = _preferredCurrencies
 
-    private val _latestUpdate: MutableLiveData<Long> = MutableLiveData()
-    val latestUpdate: LiveData<Long>
+    private val _latestUpdate: MutableLiveData<String> = MutableLiveData()
+    val latestUpdate: LiveData<String>
         get() = _latestUpdate
 
     private val _exchangeValue: MutableLiveData<Double> = MutableLiveData()
@@ -52,7 +54,7 @@ class RatesViewModel(
                 .subscribe(
                     {
                         cachedRates = it
-                        _latestUpdate.postValue(it.timestamp)
+                        _latestUpdate.postValue(getDateFromTimestamp(it.timestamp))
                     },
                     {
                         Timber.tag(TAG).d(it)
@@ -83,6 +85,12 @@ class RatesViewModel(
         exchangeRate?.let {
             _exchangeValue.postValue(count * it)
         }
+    }
+
+    private fun getDateFromTimestamp(timestamp: Long): String {
+        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+        val date = Date(timestamp)
+        return sdf.format(date)
     }
 
     override fun onCleared() {

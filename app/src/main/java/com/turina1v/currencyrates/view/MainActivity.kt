@@ -30,12 +30,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
+
         viewModel.latestUpdate.observe(this) {
             if (layoutLoader.isVisible) {
                 layoutLoader.isVisible = false
                 layoutExchange.isVisible = true
             }
-            latestUpdateText.text = it.toString()
+            latestUpdateText.text = it
+            latestUpdateText.text = getString(R.string.latest_update_message, it)
         }
 
         viewModel.preferredCurrencies.observe(this) {
