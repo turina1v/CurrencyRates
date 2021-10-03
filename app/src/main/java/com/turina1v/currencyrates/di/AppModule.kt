@@ -2,11 +2,7 @@ package com.turina1v.currencyrates.di
 
 import com.turina1v.currencyrates.data.api.NetworkClient
 import com.turina1v.currencyrates.data.database.RatesDatabase
-import com.turina1v.currencyrates.data.repository.DatabaseRatesRepositoryImpl
-import com.turina1v.currencyrates.data.repository.PreferencesRepositoryImpl
 import com.turina1v.currencyrates.data.repository.RatesRepositoryImpl
-import com.turina1v.currencyrates.domain.repository.DatabaseRatesRepository
-import com.turina1v.currencyrates.domain.repository.PreferencesRepository
 import com.turina1v.currencyrates.domain.repository.RatesRepository
 import com.turina1v.currencyrates.domain.usecase.GetAllRatesUseCase
 import com.turina1v.currencyrates.domain.usecase.GetInitialCurrenciesUseCase
@@ -20,9 +16,7 @@ import org.koin.dsl.module
 val appModule = module {
     single { NetworkClient() }
 
-    single<RatesRepository> { RatesRepositoryImpl(get()) }
-    single<DatabaseRatesRepository> { DatabaseRatesRepositoryImpl(get()) }
-    single<PreferencesRepository> { PreferencesRepositoryImpl(androidContext()) }
+    single<RatesRepository> { RatesRepositoryImpl(androidContext(), get(), get()) }
 
     single { GetInitialCurrenciesUseCase(get()) }
     single { GetAllRatesUseCase(get()) }
