@@ -21,16 +21,10 @@ class RatesRepositoryImpl(
     private var cachedRates: CombinedRates? = null
 
     override fun getRates(): Single<CombinedRates> {
-        return Observable.fromIterable(Currency.values().toList()).flatMap {
-            getRate(it.name, it.getOtherSymbols()).toObservable()
-        }.toList().map {
-            CombinedRates(
-                timestamp = System.currentTimeMillis(),
-                rates = it.mapNotNull { response ->
-                    CurrencyRate.fromResponse(response)
-                }.toSet()
-            )
-        }
+        cachedRates?.let {
+            return if (System.currentTimeMillis() < it.timestamp + CACHE_INTERVAL) Single.just(it)
+            else getRatesFromNetwork()
+        } ?: return getRatesFromDb().onErrorResumeNext { getRatesFromNetwork() }
     }
 
     override fun saveRates(rates: CombinedRates): Single<Unit> {
@@ -79,6 +73,6 @@ class RatesRepositoryImpl(
         private const val PREFS_KEY_TO = "to"
 
         /** One hour in milliseconds */
-        private val CACHE_INTERVAL = 3_600_000L
+        private const val CACHE_INTERVAL = 3_600_000L
     }
 }
