@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        setPreferredCurrencies()
         super.onStop()
+        setPreferredCurrencies()
     }
 
     private fun observeViewModel() {
