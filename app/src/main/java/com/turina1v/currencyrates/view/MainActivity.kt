@@ -44,8 +44,11 @@ class MainActivity : AppCompatActivity() {
             setInitialCurrencies(it)
         }
 
-        viewModel.exchangeValue.observe(this) {
-            exchangeValueText.setText(it)
+        viewModel.exchangeResult.observe(this) {
+            exchangeValueText.setText(it.result)
+            val str = getString(R.string.current_rate_message, it.currencyFrom.name, it.rate, it.currencyTo.name)
+            currentRateText.text =
+                getString(R.string.current_rate_message, it.currencyFrom.name, it.rate, it.currencyTo.name)
         }
     }
 

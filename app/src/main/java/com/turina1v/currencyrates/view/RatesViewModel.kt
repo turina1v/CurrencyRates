@@ -28,9 +28,9 @@ class RatesViewModel(
     val latestUpdate: LiveData<String>
         get() = _latestUpdate
 
-    private val _exchangeValue: MutableLiveData<String> = MutableLiveData()
-    val exchangeValue: LiveData<String>
-        get() = _exchangeValue
+    private val _exchangeResult: MutableLiveData<ExchangeResult> = MutableLiveData()
+    val exchangeResult: LiveData<ExchangeResult>
+        get() = _exchangeResult
 
     private var cachedRates: CombinedRates? = null
     private var cachedCurrencyFrom: Currency? = null
@@ -53,6 +53,7 @@ class RatesViewModel(
                     {
                         cachedRates = it
                         _latestUpdate.postValue(getDateFromTimestamp(it.timestamp))
+                        countExchangeValue(0)
                     },
                     {
                         Timber.tag(TAG).d(it)
@@ -80,8 +81,15 @@ class RatesViewModel(
         val exchangeRate =
             if (cachedCurrencyFrom == cachedCurrencyTo) 1.0
             else cachedRates!!.getRateOrNull(cachedCurrencyFrom!!, cachedCurrencyTo!!)
-        exchangeRate?.let {
-            _exchangeValue.postValue(String.format("%.4f", count * it))
+        exchangeRate?.let { rate ->
+            _exchangeResult.postValue(
+                ExchangeResult(
+                    currencyFrom = cachedCurrencyFrom!!,
+                    currencyTo = cachedCurrencyTo!!,
+                    rate = String.format("%.4f", rate),
+                    result = String.format("%.4f", count * rate)
+                )
+            )
         }
     }
 
@@ -100,3 +108,10 @@ class RatesViewModel(
         const val TAG = "RatesViewModel"
     }
 }
+
+data class ExchangeResult(
+    val currencyFrom: Currency,
+    val currencyTo: Currency,
+    val rate: String,
+    val result: String
+)
