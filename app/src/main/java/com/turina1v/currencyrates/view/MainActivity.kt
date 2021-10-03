@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.exchangeResult.observe(this) {
             exchangeValueText.setText(it.result)
-            val str = getString(R.string.current_rate_message, it.currencyFrom.name, it.rate, it.currencyTo.name)
             currentRateText.text =
                 getString(R.string.current_rate_message, it.currencyFrom.name, it.rate, it.currencyTo.name)
         }
@@ -92,8 +91,14 @@ class MainActivity : AppCompatActivity() {
         val currency = Currency.getItemByNameOrNull(button.text.toString())
         currency?.let {
             when (groupId) {
-                R.id.toggleGroupFrom -> viewModel.setCurrencyFrom(it)
-                R.id.toggleGroupTo -> viewModel.setCurrencyTo(it)
+                R.id.toggleGroupFrom -> {
+                    fullTextFrom.text = getCurrencyFullName(it)
+                    viewModel.setCurrencyFrom(it)
+                }
+                R.id.toggleGroupTo -> {
+                    fullTextTo.text = getCurrencyFullName(it)
+                    viewModel.setCurrencyTo(it)
+                }
             }
         }
     }
@@ -105,5 +110,16 @@ class MainActivity : AppCompatActivity() {
                 toggleGroupTo.getFocusedButtonTextOrEmpty()
             )
         )
+    }
+
+    private fun getCurrencyFullName(currency: Currency): String {
+        return when (currency) {
+            Currency.RUB -> getString(R.string.currency_name_rub)
+            Currency.USD -> getString(R.string.currency_name_usd)
+            Currency.EUR -> getString(R.string.currency_name_eur)
+            Currency.GBP -> getString(R.string.currency_name_gbp)
+            Currency.CHF -> getString(R.string.currency_name_chf)
+            Currency.CNY -> getString(R.string.currency_name_cny)
+        }
     }
 }
