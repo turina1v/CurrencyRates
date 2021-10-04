@@ -68,6 +68,8 @@ class MainActivity : AppCompatActivity() {
                 layoutLoader.isVisible = false
                 layoutError.isVisible = true
                 errorMessage.text = getErrorMessage(it.error)
+            } else {
+                ratesOutdatedText.text = getErrorMessage(it.error)
             }
         }
     }

@@ -88,6 +88,14 @@ class RatesViewModel(
                         cachedRates = it
                         _latestUpdate.postValue(getDateFromTimestamp(it.timestamp))
                         countExchangeValue(currentCount)
+                        if (System.currentTimeMillis() > it.timestamp + RATES_OUTDATED_INTERVAL) {
+                            _error.postValue(
+                                DataErrorInfo(
+                                    false,
+                                    DataError.DATA_OUTDATED
+                                )
+                            )
+                        }
                     },
                     {
                         onError.invoke(it)
@@ -142,6 +150,7 @@ class RatesViewModel(
 
     companion object {
         const val TAG = "RatesViewModel"
+        const val RATES_OUTDATED_INTERVAL = 86_400_000L //24 hours in milliseconds
     }
 }
 
