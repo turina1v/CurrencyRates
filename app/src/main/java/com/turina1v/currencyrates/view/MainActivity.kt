@@ -26,20 +26,14 @@ class MainActivity : AppCompatActivity() {
         setUpButtons()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getRates()
+    }
+
     override fun onStop() {
         super.onStop()
         setPreferredCurrencies()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(ARG_CURRENT_COUNT, viewModel.getCurrentCount())
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        val currentCount = savedInstanceState.getInt(ARG_CURRENT_COUNT)
-        if (currentCount > 0) viewModel.countExchangeValue(currentCount)
     }
 
     private fun observeViewModel() {

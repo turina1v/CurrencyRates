@@ -52,33 +52,9 @@ class RatesViewModel(
         _preferredCurrencies.postValue(initialCurrencies)
         cachedCurrencyFrom = initialCurrencies.first
         cachedCurrencyTo = initialCurrencies.second
-
-        getRates { error ->
-            when {
-                error is HttpException && error.code() in 400..499 -> _error.postValue(
-                    DataErrorInfo(
-                        true,
-                        DataError.LOADING_FAILED
-                    )
-                )
-                error is HttpException && error.code() in 500..599 -> _error.postValue(
-                    DataErrorInfo(
-                        true,
-                        DataError.SERVER_UNAVAILABLE
-                    )
-                )
-                error is UnknownHostException -> _error.postValue(
-                    DataErrorInfo(
-                        true,
-                        DataError.NO_INTERNET_CONNECTION
-                    )
-                )
-            }
-            Timber.tag(TAG).d(error)
-        }
     }
 
-    fun getRates(onError: (t: Throwable) -> Unit) {
+    fun getRates() {
         disposables.add(
             allRatesUseCase.invoke()
                 .subscribeOn(Schedulers.io())
@@ -98,9 +74,33 @@ class RatesViewModel(
                         }
                     },
                     {
-                        onError.invoke(it)
+                        if (cachedRates == null) processError(it)
                     })
         )
+    }
+
+    private fun processError(error: Throwable) {
+        when {
+            error is HttpException && error.code() in 400..499 -> _error.postValue(
+                DataErrorInfo(
+                    true,
+                    DataError.LOADING_FAILED
+                )
+            )
+            error is HttpException && error.code() in 500..599 -> _error.postValue(
+                DataErrorInfo(
+                    true,
+                    DataError.SERVER_UNAVAILABLE
+                )
+            )
+            error is UnknownHostException -> _error.postValue(
+                DataErrorInfo(
+                    true,
+                    DataError.NO_INTERNET_CONNECTION
+                )
+            )
+        }
+        Timber.tag(TAG).d(error)
     }
 
     fun getCurrentCount(): Int = currentCount
