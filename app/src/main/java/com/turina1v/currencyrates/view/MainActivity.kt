@@ -58,12 +58,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.error.observe(this) {
-            if (it.isInitial) {
+            if (!it.isCacheExist) {
                 layoutLoader.isVisible = false
                 layoutError.isVisible = true
-                errorMessage.text = getErrorMessage(it.error)
+                errorMessage.text = getErrorMessage(it)
             } else {
-                ratesOutdatedText.text = getErrorMessage(it.error)
+                ratesOutdatedText.text = getErrorMessage(it)
             }
         }
     }
@@ -152,9 +152,5 @@ class MainActivity : AppCompatActivity() {
             DataError.LOADING_FAILED -> getString(R.string.error_message_loading_failed)
             DataError.DATA_OUTDATED -> getString(R.string.error_message_data_outdated)
         }
-    }
-
-    companion object {
-        private const val ARG_CURRENT_COUNT = "current_count"
     }
 }

@@ -7,7 +7,6 @@ import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import com.turina1v.currencyrates.domain.model.CombinedRates
 import com.turina1v.currencyrates.domain.model.Currency
 import com.turina1v.currencyrates.domain.model.DataError
-import com.turina1v.currencyrates.domain.model.DataErrorInfo
 import com.turina1v.currencyrates.domain.usecase.GetAllRatesUseCase
 import com.turina1v.currencyrates.domain.usecase.GetInitialCurrenciesUseCase
 import com.turina1v.currencyrates.domain.usecase.SavePreferredCurrenciesUseCase
@@ -36,8 +35,8 @@ class RatesViewModel(
     val exchangeResult: LiveData<ExchangeResult>
         get() = _exchangeResult
 
-    private val _error: MutableLiveData<DataErrorInfo> = MutableLiveData()
-    val error: LiveData<DataErrorInfo>
+    private val _error: MutableLiveData<DataError> = MutableLiveData()
+    val error: LiveData<DataError>
         get() = _error
 
     private var cachedRates: CombinedRates? = null
@@ -65,12 +64,7 @@ class RatesViewModel(
                         _latestUpdate.postValue(getDateFromTimestamp(it.timestamp))
                         countExchangeValue(currentCount)
                         if (System.currentTimeMillis() > it.timestamp + RATES_OUTDATED_INTERVAL) {
-                            _error.postValue(
-                                DataErrorInfo(
-                                    false,
-                                    DataError.DATA_OUTDATED
-                                )
-                            )
+                            _error.postValue(DataError.DATA_OUTDATED)
                         }
                     },
                     {
@@ -81,24 +75,9 @@ class RatesViewModel(
 
     private fun processError(error: Throwable) {
         when {
-            error is HttpException && error.code() in 400..499 -> _error.postValue(
-                DataErrorInfo(
-                    true,
-                    DataError.LOADING_FAILED
-                )
-            )
-            error is HttpException && error.code() in 500..599 -> _error.postValue(
-                DataErrorInfo(
-                    true,
-                    DataError.SERVER_UNAVAILABLE
-                )
-            )
-            error is UnknownHostException -> _error.postValue(
-                DataErrorInfo(
-                    true,
-                    DataError.NO_INTERNET_CONNECTION
-                )
-            )
+            error is HttpException && error.code() in 400..499 -> _error.postValue(DataError.LOADING_FAILED)
+            error is HttpException && error.code() in 500..599 -> _error.postValue(DataError.SERVER_UNAVAILABLE)
+            error is UnknownHostException -> _error.postValue(DataError.NO_INTERNET_CONNECTION)
         }
         Timber.tag(TAG).d(error)
     }
