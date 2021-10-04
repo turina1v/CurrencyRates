@@ -10,6 +10,7 @@ import com.turina1v.currencyrates.domain.model.CurrencyRate
 import com.turina1v.currencyrates.domain.repository.RatesRepository
 import io.reactivex.Observable
 import io.reactivex.Single
+import timber.log.Timber
 
 class RatesRepositoryImpl(
     context: Context,
@@ -63,7 +64,11 @@ class RatesRepositoryImpl(
             )
             cachedRates = newRates
             newRates
-        }.doOnSuccess { saveRates(it).subscribe() }
+        }.doOnSuccess {
+            saveRates(it).subscribe({}, { error ->
+                Timber.tag(TAG).d(error, "Error saving to DB")
+            })
+        }
     }
 
     private fun getRatesFromDb(): Single<CombinedRates> {
@@ -80,6 +85,7 @@ class RatesRepositoryImpl(
     }
 
     companion object {
+        private const val TAG = "RatesRepository"
         private const val PREFS_NAME = "currency_preferences"
         private const val PREFS_KEY_FROM = "from"
         private const val PREFS_KEY_TO = "to"
