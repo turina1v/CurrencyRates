@@ -29,6 +29,17 @@ class MainActivity : AppCompatActivity() {
         setPreferredCurrencies()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(ARG_CURRENT_COUNT, viewModel.getCurrentCount())
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val currentCount = savedInstanceState.getInt(ARG_CURRENT_COUNT)
+        if (currentCount > 0) viewModel.countExchangeValue(currentCount)
+    }
+
     private fun observeViewModel() {
 
         viewModel.latestUpdate.observe(this) {
@@ -121,5 +132,9 @@ class MainActivity : AppCompatActivity() {
             Currency.CHF -> getString(R.string.currency_name_chf)
             Currency.CNY -> getString(R.string.currency_name_cny)
         }
+    }
+
+    companion object {
+        private const val ARG_CURRENT_COUNT = "current_count"
     }
 }

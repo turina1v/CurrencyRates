@@ -61,6 +61,8 @@ class RatesViewModel(
         )
     }
 
+    fun getCurrentCount(): Int = currentCount
+
     fun savePreferredCurrencies(currencyPair: Pair<String, String>) {
         savePreferredCurrenciesUseCase.invoke(currencyPair)
     }
