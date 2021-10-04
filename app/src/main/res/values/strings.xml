@@ -15,4 +15,8 @@
     <string name="loader_message">Loading latest exchange rates…</string>
     <string name="latest_update_message">Latest update %s</string>
     <string name="current_rate_message">1 %s = %s %s</string>
+    <string name="error_message_no_internet">No Internet connection available.\nPlease, connect and try again</string>
+    <string name="error_message_server_unavailable">Service is temporarily unavailable.\nPlease, try again later</string>
+    <string name="error_message_loading_failed">Data loading failed.\nPlease, try again later</string>
+    <string name="error_message_data_outdated">Attention! Exchange rates are outdated.\nPlease, connect to the network and load latest rates</string>
 </resources>

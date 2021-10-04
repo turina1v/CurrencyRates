@@ -8,7 +8,9 @@ import androidx.core.view.isVisible
 import com.google.android.material.button.MaterialButton
 import com.turina1v.currencyrates.R
 import com.turina1v.currencyrates.domain.model.Currency
+import com.turina1v.currencyrates.domain.model.DataError
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_exchange.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -59,6 +61,14 @@ class MainActivity : AppCompatActivity() {
             exchangeValueText.setText(it.result)
             currentRateText.text =
                 getString(R.string.current_rate_message, it.currencyFrom.name, it.rate, it.currencyTo.name)
+        }
+
+        viewModel.error.observe(this) {
+            if (it.isInitial) {
+                layoutLoader.isVisible = false
+                layoutError.isVisible = true
+                errorMessage.text = getErrorMessage(it.error)
+            }
         }
     }
 
@@ -131,6 +141,15 @@ class MainActivity : AppCompatActivity() {
             Currency.GBP -> getString(R.string.currency_name_gbp)
             Currency.CHF -> getString(R.string.currency_name_chf)
             Currency.CNY -> getString(R.string.currency_name_cny)
+        }
+    }
+
+    private fun getErrorMessage(error: DataError): String {
+        return when (error) {
+            DataError.NO_INTERNET_CONNECTION -> getString(R.string.error_message_no_internet)
+            DataError.SERVER_UNAVAILABLE -> getString(R.string.error_message_server_unavailable)
+            DataError.LOADING_FAILED -> getString(R.string.error_message_loading_failed)
+            DataError.DATA_OUTDATED -> getString(R.string.error_message_data_outdated)
         }
     }
 

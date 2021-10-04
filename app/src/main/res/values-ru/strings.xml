@@ -16,4 +16,8 @@
     <string name="loader_message">Загрузка актуальных курсов валют…</string>
     <string name="latest_update_message">Последнее обновление %s</string>
     <string name="current_rate_message">1 %s = %s %s</string>
+    <string name="error_message_no_internet">Отсутствует подключение к сети Интернет.\nПожалуйста, подключитесь и попробуйте снова</string>
+    <string name="error_message_server_unavailable">Сервис временно недоступен.\nПожалуйста, попробуйте позже</string>
+    <string name="error_message_loading_failed">Ошибка загрузки данных.\nПожалуйста, попробуйте позже</string>
+    <string name="error_message_data_outdated">Внимание! Курсы валют устарели.\nПожалуйста, подключитесь к сети и загрузите актуальные данные</string>
 </resources>

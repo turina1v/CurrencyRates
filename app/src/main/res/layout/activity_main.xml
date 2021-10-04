@@ -11,6 +11,11 @@
         layout="@layout/layout_loader" />
 
     <include
+        android:id="@+id/layoutError"
+        layout="@layout/layout_error"
+        android:visibility="gone" />
+
+    <include
         android:id="@+id/layoutExchange"
         layout="@layout/layout_exchange"
         android:visibility="invisible" />

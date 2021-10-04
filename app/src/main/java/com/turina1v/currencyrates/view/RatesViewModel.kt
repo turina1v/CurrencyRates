@@ -3,8 +3,11 @@ package com.turina1v.currencyrates.view
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import com.turina1v.currencyrates.domain.model.CombinedRates
 import com.turina1v.currencyrates.domain.model.Currency
+import com.turina1v.currencyrates.domain.model.DataError
+import com.turina1v.currencyrates.domain.model.DataErrorInfo
 import com.turina1v.currencyrates.domain.usecase.GetAllRatesUseCase
 import com.turina1v.currencyrates.domain.usecase.GetInitialCurrenciesUseCase
 import com.turina1v.currencyrates.domain.usecase.SavePreferredCurrenciesUseCase
@@ -12,6 +15,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.net.UnknownHostException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -32,6 +36,10 @@ class RatesViewModel(
     val exchangeResult: LiveData<ExchangeResult>
         get() = _exchangeResult
 
+    private val _error: MutableLiveData<DataErrorInfo> = MutableLiveData()
+    val error: LiveData<DataErrorInfo>
+        get() = _error
+
     private var cachedRates: CombinedRates? = null
     private var cachedCurrencyFrom: Currency? = null
     private var cachedCurrencyTo: Currency? = null
@@ -45,6 +53,32 @@ class RatesViewModel(
         cachedCurrencyFrom = initialCurrencies.first
         cachedCurrencyTo = initialCurrencies.second
 
+        getRates { error ->
+            when {
+                error is HttpException && error.code() in 400..499 -> _error.postValue(
+                    DataErrorInfo(
+                        true,
+                        DataError.LOADING_FAILED
+                    )
+                )
+                error is HttpException && error.code() in 500..599 -> _error.postValue(
+                    DataErrorInfo(
+                        true,
+                        DataError.SERVER_UNAVAILABLE
+                    )
+                )
+                error is UnknownHostException -> _error.postValue(
+                    DataErrorInfo(
+                        true,
+                        DataError.NO_INTERNET_CONNECTION
+                    )
+                )
+            }
+            Timber.tag(TAG).d(error)
+        }
+    }
+
+    fun getRates(onError: (t: Throwable) -> Unit) {
         disposables.add(
             allRatesUseCase.invoke()
                 .subscribeOn(Schedulers.io())
@@ -53,10 +87,10 @@ class RatesViewModel(
                     {
                         cachedRates = it
                         _latestUpdate.postValue(getDateFromTimestamp(it.timestamp))
-                        countExchangeValue(0)
+                        countExchangeValue(currentCount)
                     },
                     {
-                        Timber.tag(TAG).d(it)
+                        onError.invoke(it)
                     })
         )
     }
