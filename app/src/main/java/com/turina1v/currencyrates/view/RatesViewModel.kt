@@ -103,8 +103,6 @@ class RatesViewModel(
         Timber.tag(TAG).d(error)
     }
 
-    fun getCurrentCount(): Int = currentCount
-
     fun savePreferredCurrencies(currencyPair: Pair<String, String>) {
         savePreferredCurrenciesUseCase.invoke(currencyPair)
     }
