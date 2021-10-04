@@ -19,4 +19,5 @@
     <string name="error_message_server_unavailable">Service is temporarily unavailable.\nPlease, try again later</string>
     <string name="error_message_loading_failed">Data loading failed.\nPlease, try again later</string>
     <string name="error_message_data_outdated">Attention! Exchange rates are outdated.\nPlease, connect to the network and load latest rates</string>
+    <string name="button_refresh">Refresh</string>
 </resources>

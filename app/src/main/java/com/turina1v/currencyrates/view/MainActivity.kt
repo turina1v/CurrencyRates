@@ -101,6 +101,11 @@ class MainActivity : AppCompatActivity() {
         toggleGroupTo.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (isChecked) listenToButtonCheckedChanges(group.id, checkedId)
         }
+        buttonRefresh.setOnClickListener {
+            layoutError.isVisible = false
+            layoutLoader.isVisible = true
+            viewModel.getRates()
+        }
     }
 
     private fun listenToButtonCheckedChanges(groupId: Int, checkedId: Int) {

@@ -20,4 +20,5 @@
     <string name="error_message_server_unavailable">Сервис временно недоступен.\nПожалуйста, попробуйте позже</string>
     <string name="error_message_loading_failed">Ошибка загрузки данных.\nПожалуйста, попробуйте позже</string>
     <string name="error_message_data_outdated">Внимание! Курсы валют устарели.\nПожалуйста, подключитесь к сети и загрузите актуальные данные</string>
+    <string name="button_refresh">Обновить</string>
 </resources>
